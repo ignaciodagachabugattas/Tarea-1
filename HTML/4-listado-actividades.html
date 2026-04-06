@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Actividades - DCC Calidad de Vida</title>
+    <link rel="stylesheet" href="../css/estilo.css">
+</head>
+<body>
+    <header>
+        <h1>Gestión de Actividades - DCC - Calidad de Vida</h1>
+<nav>
+            <ul>
+            <li><a href="0-index.html">Métricas</a></li>
+            <li><a href="1-registrar-miembro.html">Registrar Miembro</a></li>
+            <li><a href="2-informar-actividad.html">Informar Actividad</a></li>
+            <li><a href="3-listado-miembros.html">Listado de Miembros</a></li>
+            <li><a href="4-listado-actividades.html">Listado de Actividades</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Actividades Registradas</h2>
+        
+        <!-- barra de filtrado -->       
+        <label>Filtrar por categoría:</label>
+        <select id="filtro-actividad" onchange="filtrarActividades()">
+            <option value="todos">Todas las actividades</option>
+            <option value="deportivo">Deportivo</option>
+            <option value="academico">Académico</option>
+            <option value="musical">Musical</option>
+            <option value="otros">Otros</option>
+        </select>
+
+        <!-- vspace{2pt} -->
+        <br><br>
+        
+        <!-- tabla -->
+        <table>
+            <thead>
+                <tr>
+                    <th class="ordenable" onclick="ordenarTabla(0, 'cuerpo-tabla-actividades')">Nombre ↕</th>
+                    <th class="ordenable" onclick="ordenarTabla(1, 'cuerpo-tabla-actividades')">Tipo ↕</th>
+                    <th class="ordenable" onclick="ordenarTabla(2, 'cuerpo-tabla-actividades')">Horario ↕</th>
+                    <th class="ordenable" onclick="ordenarTabla(3, 'cuerpo-tabla-actividades')">Lugar ↕</th>
+                    <th> Enlace </th> 
+                    <th> Multimedia </th>
+                </tr>
+            </thead>
+
+            <!-- datos falsos -->
+            <tbody id="cuerpo-tabla-actividades">
+                <tr class="fila-actividad" data-tipo="deportivo">
+                    <td>Taller de Fútbol</td>
+                    <td>Deportivo</td>
+                    <td>Martes y Jueves, 18:00 hrs</td>
+                    <td>Cancha 850</td>
+                    <td><a href="#">Ver</a></td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr class="fila-actividad" data-tipo="academico">
+                    <td>Grupo de Estudio HTML</td>
+                    <td>Académico</td>
+                    <td>Miércoles, 15:00 hrs</td>
+                    <td>OPEN Space</td>
+                    <td><a href="#">Ver</a></td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr class="fila-actividad" data-tipo="musical">
+                    <td>Ensayo Banda PerDIMos</td>
+                    <td>Musical</td>
+                    <td>Viernes, 17:00 hrs</td>
+                    <td>El Detiñí</td>
+                    <td><a href="#">Ver</a></td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr class="fila-actividad" data-tipo="deportivo">
+                    <td>Final DCCserie A</td>
+                    <td>Deportivo</td>
+                    <td>Sábado, 10:00 hrs</td>
+                    <td>Cancha 850</td>
+                    <td><a href="#">Ver</a></td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+
+                <tr class="fila-actividad" data-tipo="academico">
+                    <td>Taller JavaScript</td>
+                    <td>Académico</td>
+                    <td>Miércoles, 14:30 hrs</td>
+                    <td>Sala Jacques Lions </td>
+                    <td><a href="#">Ver</a></td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+
+                <tr class="fila-actividad" data-tipo="otros">
+                    <td>Tarde de Go</td>
+                    <td>Otros</td>
+                    <td>Jueves, 18:00 hrs</td>
+                    <td>Sobria</td>
+                    <td><a href="#">Ver</a></td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+
+                <tr class="fila-actividad" data-tipo="otros">
+                    <td>Taller de Teatro</td>
+                    <td>Otros</td>
+                    <td>Lunes, 19:00 hrs</td>
+                    <td>B010</td>
+                    <td><a href="#">Ver</a></td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+
+                <tr class="fila-actividad" data-tipo="otros">
+                    <td>CEF</td>
+                    <td>Otros</td>
+                    <td>Martes, 12:00 hrs</td>
+                    <td>Ebria</td>
+                    <td><a href="#">Ver</a></td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- boton pasar pagina -->
+        <div class="paginacion" style="text-align: center; margin-top: 20px;">
+            <button id="btn-anterior" onclick="cambiarPagina(-1)" disabled>Anterior</button>
+            <span id="info-pagina" style="margin: 0 15px; font-weight: bold;">Página 1</span>
+            <button id="btn-siguiente" onclick="cambiarPagina(1)">Siguiente</button>
+        </div>
+    </main>
+    <script src="../js/script.js"></script>
+</body>
+</html>

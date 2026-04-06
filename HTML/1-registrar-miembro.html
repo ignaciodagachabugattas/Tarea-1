@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro - DCC Calidad de Vida</title>
+    <link rel="stylesheet" href="../css/estilo.css">
+</head>
+
+<body>
+
+    <!-- header y barra de navegación -->
+    <header>
+        <h1>Gestión de Actividades - DCC - Calidad de Vida</h1>
+        <nav>
+            <ul>
+            <li><a href="0-index.html">Métricas</a></li>
+            <li><a href="1-registrar-miembro.html">Registrar Miembro</a></li>
+            <li><a href="2-informar-actividad.html">Informar Actividad</a></li>
+            <li><a href="3-listado-miembros.html">Listado de Miembros</a></li>
+            <li><a href="4-listado-actividades.html">Listado de Actividades</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>Registro de Nuevo Miembro</h2>
+        <p>Los campos marcados con (*) son obligatorios.</p>
+        
+        <!-- formulario miembros -->
+        <form id="form-miembro" onsubmit="validarMiembro(event)" novalidate>
+
+            <div class="campo">
+                <label>Nombre Completo (*):</label>
+                <input type="text" id="nombre">
+                <span class="error" id="error-nombre">Por favor, ingrese su nombre.</span>
+            </div>
+
+            <div class="campo">
+                <label>Email de contacto (*):</label>
+                <input type="email" id="email">
+                <span class="error" id="error-email">Ingrese un email válido.</span>
+            </div>
+
+            <div class="campo">
+                <label>Tipo de Miembro (*):</label>
+                <select id="tipo" onchange="cambiarCampoExtra()">
+                    <option value="">-- Seleccione --</option>
+                    <option value="pregrado">Estudiante Pregrado</option>
+                    <option value="postgrado">Estudiante Postgrado</option>
+                    <option value="academico">Académico(a)</option>
+                    <option value="funcionario">Funcionario(a)</option>
+                </select>
+                <span class="error" id="error-tipo">Seleccione un tipo de miembro.</span>
+            </div>
+
+            <div class="campo" id="div-extra" style="display: none;">
+                <label id="label-extra">Dato específico:</label>
+                <input type="number" id="dato-extra">
+                <span class="error" id="error-dato-extra">Por favor, complete este campo con un año en formato número, .</span>
+            </div>
+
+            <button type="submit">Guardar Miembro</button>
+
+        </form>
+    </main>
+    <script src="../js/script.js"></script>
+</body>
+</html>
