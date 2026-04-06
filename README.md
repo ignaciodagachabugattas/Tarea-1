@@ -1,7 +1,7 @@
 # Tarea 1 - Gestión de Actividades - DCC - Calidad de Vida
 CC5002-1 Otoño 2026- Desarrollo de Aplicaciones Web  
 Ignacio Dagach Abugattas
-Repositorio: 
+Repositorio: https://github.com/ignaciodagachabugattas/desarrollo_web_ignacio_dagach_abugattas/tree/Tarea-1 
 
 
 
