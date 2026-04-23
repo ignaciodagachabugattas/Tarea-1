@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Actividades de {{ miembro.nombre }} - DCC Calidad de Vida</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    <style>
+        .miniatura { max-width: 120px; max-height: 120px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gestión de Actividades - DCC - Calidad de Vida</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('inicio') }}">Métricas</a></li>
+                <li><a href="{{ url_for('registro') }}">Registrar Miembro</a></li>
+                <li><a href="{{ url_for('actividades') }}">Informar Actividad</a></li>
+                <li><a href="{{ url_for('listado_miembros') }}">Listado de Miembros</a></li>
+                <li><a href="{{ url_for('listado_actividades') }}">Listado de Actividades</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>Perfil y Actividades de: {{ miembro.nombre }}</h2>
+        
+        <p>
+            <strong>Email:</strong> {{ miembro.email }}<br>
+            <strong>Tipo:</strong> {{ miembro.tipo.capitalize() }}<br>
+            <strong>Dato Extra:</strong> {{ miembro.dato_extra }} <small><em>                  <br>  * Año de ingreso a pre/post grado para estudiante,<br>  * Horas de docencia para académico(a),<br> * Año de contratación para funcionario(a)
+</em></small><br>
+            <strong>Fecha de Registro:</strong> {{ miembro.fecha_registro.strftime('%d-%m-%Y %H:%M') }}
+        </p>
+
+        <h3 style="margin-top: 30px;">Actividades Informadas</h3>
+
+<table style="border: 1px solid black; border-collapse: collapse;">            <thead>
+                <tr>
+                    <th>Actividad</th>
+                    <th>Tipo</th>
+                    <th>Horario / Lugar</th>
+                    <th>Foto / Video</th>
+                    <th>Enlace</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for act in actividades %}
+                <tr>
+                    <td>{{ act.nombre_actividad }}</td>
+                    <td>{{ act.tipo_actividad.capitalize() }}</td>
+                    <td>
+                        {{ act.horario }}<br>
+                        {{ act.lugar }}
+                    </td>
+                    <td style="text-align: center;">
+                        {% if act.ruta_archivo.endswith('.mp4') %}
+                            <video class="miniatura" controls>
+                                <source src="{{ url_for('static', filename='Imagenes/' + act.ruta_archivo) }}" type="video/mp4">
+                                Tu navegador no soporta videos.
+                            </video>
+                        {% else %}
+                            <img src="{{ url_for('static', filename='Imagenes/' + act.ruta_archivo) }}" alt="Foto de la actividad" class="miniatura">
+                        {% endif %}
+                    </td>
+                    <td><a href="{{ act.enlace }}" target="_blank">Ver más</a></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" style="text-align: center;">Este miembro aún no tiene actividades registradas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p style="margin-top: 20px;">
+            <a href="{{ url_for('listado_miembros') }}">Volver al Listado de Miembros</a>
+        </p>
+    </main>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

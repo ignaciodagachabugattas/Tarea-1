@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Miembros - DCC Calidad de Vida</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    <style>
+        .paginacion { margin-top: 20px; text-align: center; }
+        .paginacion a, .paginacion strong { padding: 8px 12px; margin: 0 5px; border: 1px solid #ccc; text-decoration: none; border-radius: 5px; }
+        .paginacion strong { background-color: #007bff; color: white; border-color: #007bff; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gestión de Actividades - DCC - Calidad de Vida</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('inicio') }}">Métricas</a></li>
+                <li><a href="{{ url_for('registro') }}">Registrar Miembro</a></li>
+                <li><a href="{{ url_for('actividades') }}">Informar Actividad</a></li>
+                <li><a href="{{ url_for('listado_miembros') }}">Listado de Miembros</a></li>
+                <li><a href="{{ url_for('listado_actividades') }}">Listado de Actividades</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>Listado de Miembros Registrados</h2>
+
+        <p>Haz click en el nombre de un miembro para ver las actividades que ha informado.</p>
+        <form method="GET" action="{{ url_for('listado_miembros') }}" style="margin-bottom: 20px;">
+    <label for="tipo">Filtrar por tipo:</label>
+    <select name="tipo" id="tipo">
+        <option value="">Todos</option>
+        <option value="pregrado" {% if filtro_tipo == 'pregrado' %}selected{% endif %}>Pregrado</option>
+        <option value="postgrado" {% if filtro_tipo == 'postgrado' %}selected{% endif %}>Postgrado</option>
+        <option value="academico" {% if filtro_tipo == 'academico' %}selected{% endif %}>Académico</option>
+        <option value="funcionario" {% if filtro_tipo == 'funcionario' %}selected{% endif %}>Funcionario</option>
+    </select>
+    <input type="hidden" name="sort" value="{{ sort_by }}">
+    <button type="submit">Filtrar</button>
+</form>
+<table style="border: 1px solid black; border-collapse: collapse;">            <thead>
+                <tr>
+                    <th><a href="{{ url_for('listado_miembros', sort='nombre') }}" style="color: black; text-decoration: none;">Nombre Completo ↕</a></th>
+                    <th><a href="{{ url_for('listado_miembros', sort='email') }}" style="color: black; text-decoration: none;">Email ↕</a></th>
+                    <th><a href="{{ url_for('listado_miembros', sort='tipo') }}" style="color: black; text-decoration: none;">Tipo ↕</a></th>
+                    <th>Dato Extra</th>
+                    <th><a href="{{ url_for('listado_miembros', sort='fecha') }}" style="color: black; text-decoration: none;">Fecha de Registro ↕</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in miembros.items %}
+                <tr>
+<td>
+    <a href="{{ url_for('actividades_por_miembro', id_miembro=m.id) }}" style="color: #007bff; font-weight: bold; text-decoration: underline;">
+        {{ m.nombre }}
+    </a>
+</td>                    <td>{{ m.email }}</td>
+                    <td>{{ m.tipo.capitalize() }}</td>
+                    <td>{{ m.dato_extra if m.dato_extra != None else '-' }}</td>
+                    <td>{{ m.fecha_registro.strftime('%d-%m-%Y %H:%M') }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" style="text-align: center;">No hay miembros registrados aún.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p style="text-align: left; margin-top: 5px;">
+            <small style="color: #666;">
+                <em><strong>Dato Extra:</strong>              <br>        * Año de ingreso a pre/post grado para estudiante,<br>  * Horas de docencia para académico(a),<br> * Año de contratación para funcionario(a)
+                </em>
+            </small>
+        </p>
+
+        <div class="paginacion">
+            {% if miembros.has_prev %}
+                <a href="{{ url_for('listado_miembros', page=miembros.prev_num, sort=sort_by) }}">« Anterior</a>
+            {% endif %}
+
+            {% for num in miembros.iter_pages() %}
+                {% if num %}
+                    {% if num == miembros.page %}
+                        <strong>{{ num }}</strong>
+                    {% else %}
+                        <a href="{{ url_for('listado_miembros', page=num, sort=sort_by) }}">{{ num }}</a>
+                    {% endif %}
+                {% else %}
+                    <span>...</span>
+                {% endif %}
+            {% endfor %}
+
+            {% if miembros.has_next %}
+                <a href="{{ url_for('listado_miembros', page=miembros.next_num, sort=sort_by) }}">Siguiente »</a>
+            {% endif %}
+        </div>
+    </main>
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

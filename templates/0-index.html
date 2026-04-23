@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Métricas - DCC Calidad de Vida</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}"></head>
+<body>
+    <header> 
+        <h1>Gestión de Actividades - DCC - Calidad de Vida</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('inicio') }}">Métricas</a></li>
+                <li><a href="{{ url_for('registro') }}">Registrar Miembro</a></li>
+                <li><a href="{{ url_for('actividades') }}">Informar Actividad</a></li>
+                <li><a href="{{ url_for('listado_miembros') }}">Listado de Miembros</a></li>
+                <li><a href="{{ url_for('listado_actividades') }}">Listado de Actividades</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Bienvenidx!</h2>
+            {% if request.args.get('miembro_exito') %}
+            <div style="padding: 15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+             Miembro registrado correctamente.
+            </div>
+            {% endif %}
+            {% if request.args.get('actividad_exito') %}
+            <div style="padding: 15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+            Actividad informada correctamente.
+            </div>
+            {% endif %}
+        </section>
+
+        <section>
+            <h3>Últimos 5 Miembros Registrados!!!</h3>
+            {% if miembros %}
+<table style="border: 1px solid black; border-collapse: collapse;">                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Tipo</th>
+                            <th>Fecha de Registro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in miembros %}
+                        <tr>
+                            <td>{{ m.nombre }}</td>
+                            <td>{{ m.email }}</td>
+                            <td>{{ m.tipo }}</td>
+                            <td>{{ m.fecha_registro }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Aún no hay miembros registrados.</p>
+            {% endif %}
+        </section>
+
+        <section>
+            <h3>Métricas Falsas</h3>
+            <section>
+            <h4>Cantidad de Miembros por Tipo</h4>
+            <div class="barra-grafico" style="width: 80%;">Estudiantes Pregrado (80)</div>
+            <div class="barra-grafico" style="width: 30%;">Estudiantes Postgrado (30)</div>
+            <div class="barra-grafico" style="width: 20%;">Académicos (20)</div>
+            <div class="barra-grafico" style="width: 40%;">Funcionarios (40)</div>
+        </section>
+        <section>
+            <h4 >Actividades más populares</h4>
+            <div class="barra-grafico" style="width: 60%; background-color: #2196F3;">Deportivas (50%)</div>
+            <div class="barra-grafico" style="width: 25%; background-color: #2196F3;">Musicales (25%)</div>
+            <div class="barra-grafico" style="width: 15%; background-color: #2196F3;">Académicas (15%)</div>
+            <div class="barra-grafico" style="width: 10%; background-color: #2196F3;">Otras (10%)</div>
+        </section>
+        </section>
+    </main>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
