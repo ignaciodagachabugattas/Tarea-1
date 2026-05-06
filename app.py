@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
-import re  
+import re 
+from werkzeug.utils import secure_filename
 
 
 
@@ -92,6 +93,22 @@ def registro():
 
 
 # registrar actividad con validación en servidor 
+
+# extensiones permitidas
+EXTENSIONES_FOTO = {'png', 'jpg', 'jpeg', 'gif'}
+EXTENSIONES_VIDEO = {'mp4', 'avi', 'mov', 'webm'}
+
+# función para verificar el tipo de archivo
+def obtener_tipo_archivo(filename):
+    if '.' in filename:
+        ext = filename.rsplit('.', 1)[1].lower()
+        if ext in EXTENSIONES_FOTO:
+            return 'foto'
+        elif ext in EXTENSIONES_VIDEO:
+            return 'video'
+    return None
+
+
 @app.route('/actividades', methods=['GET', 'POST'])
 def actividades():
     if request.method == 'POST':
@@ -101,7 +118,7 @@ def actividades():
         horario = request.form.get('horario', '').strip()
         lugar = request.form.get('lugar', '').strip()
         enlace = request.form.get('enlace', '').strip()
-        archivo = request.files.get('archivo')
+        archivo = request.files.getlist('archivo')
         
         errores = {}
         
@@ -117,8 +134,33 @@ def actividades():
         if not enlace or not re.match(regex_enlace, enlace): 
             errores['enlace'] = "Debe ingresar un enlace válido que comience con http:// o https://"
             
-        if not archivo or archivo.filename == '': errores['archivo'] = "Debes subir un archivo."
+        if len(archivo) == 0 or archivo[0].filename == '': errores['archivo'] = "Debes subir un archivo."        
+        # contadores 
+        fotos = 0
+        videos = 0
         
+        # revisamos los aerchivos subidos
+        for f in archivo:
+            nombre = f.filename.lower()
+            
+            if nombre == '': 
+                continue 
+                
+            # verificamos archivos validos
+            if nombre.endswith('.jpg') or nombre.endswith('.jpeg') or nombre.endswith('.png'):
+                fotos += 1
+            elif nombre.endswith('.mp4') or nombre.endswith('.avi'):
+                videos += 1
+            else:
+                errores['archivo'] = "Archivo inválido. Solo se acepta .jpg, .png, .mp4 o .avi"
+                
+        # maximo de cada 1
+        if fotos > 1:
+            errores['archivo'] = "Máximo 1 foto permitida."
+        if videos > 1:
+            errores['archivo'] = "Máximo 1 video permitido."
+        if fotos == 0 and videos == 0:
+            errores['archivo'] = "Debes subir al menos un archivo (foto o video)."
         # si hay errores, regresamos los datos ingresados y los mensajes de error
         if errores:
             datos_ingresados = {
@@ -130,9 +172,15 @@ def actividades():
             return render_template('2-informar-actividad.html', miembros=lista_miembros, errores=errores, datos=datos_ingresados)
 
         # guardar el archivos
-        nombre_archivo = archivo.filename
-        ruta_guardado = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo)
-        archivo.save(ruta_guardado)
+        nombres_para_bd = ""
+        
+        for f in archivo:
+            if f.filename != '':
+                ruta_guardado = os.path.join(app.config['UPLOAD_FOLDER'], f.filename)
+                f.save(ruta_guardado)
+                nombres_para_bd += f.filename + ","
+                
+        nombres_para_bd = nombres_para_bd.strip(",")
 
         # guardar los datos en la base de datos
         nueva_actividad = Actividad(
@@ -140,7 +188,7 @@ def actividades():
             tipo_actividad=tipo_actividad,
             horario=horario,
             lugar=lugar,
-            ruta_archivo=nombre_archivo,
+            ruta_archivo=nombres_para_bd,
             enlace=enlace,
             miembro_id=int(miembro_id)
         )
