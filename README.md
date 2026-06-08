@@ -11,7 +11,7 @@ Para esta Tarea 3, se agregaron gráficos interactivos para las estadísticas de
 
 Además, se actualizó el código para solucionar el feedback de las entregas anteriores:
 * **Arreglos según comentarios de la Tarea 1:** Se solucionó el problema de los horarios (cambiando el texto libre por selectores de Día y Hora para que no metan cualquier cosa) y se ajustó la validación el servidor en Python para que si llega un "NaN" o texto en los datos extra.
-* **Comentarios de la Tarea 2:** QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+* **Comentarios de la Tarea 2:** no hay
 
 ## Lo que hace: Todo lo siguiente con validaciones JavaScript y en el servidor de Python
 1. **Registro de Miembros:** Formulario para registro de miembros (ahora protegido contra los NaN en dato extra).
@@ -23,4 +23,4 @@ Además, se actualizó el código para solucionar el feedback de las entregas an
 7. **Comentarios:** En el detalle de cada actividad se pueden ver los comentarios existentes (con su fecha y nombre) y hay un botón con el texto “Agregar comentario”. Todo funciona con fetch.
 
 ## Decisiones (Para la corrección)
-1. QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+1. no hay
