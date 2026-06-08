@@ -1,0 +1,102 @@
+
+/* general general */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    text-align: left;
+}
+
+/* titulo de la pagina */
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+
+/* barra de navegacion */
+nav a {   
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+
+/* generalcito */
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    text-align: left;
+}
+
+
+
+/* formularios */
+header nav, main form, .campo {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+/* espacio entre preguntas */
+.campo {
+    margin-bottom: 15px;
+}
+/* En cajita las respuestas */
+label {
+    display: block;
+    font-weight: bold;
+}
+/* Las cajas donde el usuario escribe y los menús desplegables */
+input, select {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+
+/* mensaje de error */
+.error {
+    color: red;
+    font-size: 14px;
+    display: none; 
+}
+
+
+/* tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+/* bordecito gris a la tabla, títulos y datos */
+table, th, td {
+    border: 1px solid #aaa;
+}
+/* dentro de las celdas */
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+
+
+/* para los títulos de columnas que se pueden clickear  */
+th.ordenable {
+    /* cambia la flecha del mouse por una manito para indicar que es clickeable */
+    cursor: pointer;
+}
+
+/* rectángulos que simulan gráficos de barra */
+.barra-grafico {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px;
+    margin-bottom: 5px;
+}

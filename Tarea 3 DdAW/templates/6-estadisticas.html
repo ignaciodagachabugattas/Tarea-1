@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas del Sistema</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
+        .contenedor-graficos { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; }
+        .grafico { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 45%; min-width: 400px; }
+        .volver { display: block; text-align: center; margin-top: 40px; padding: 10px; text-decoration: none; background: #007bff; color: white; border-radius: 5px; width: 200px; margin-left: auto; margin-right: auto; }
+        .volver:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center;">Estadísticas del Sistema</h1>
+
+    <div class="contenedor-graficos">
+        <div id="graficoLineas" class="grafico"></div>
+        <div id="graficoTorta" class="grafico"></div>
+        <div id="graficoBarras" class="grafico" style="width: 95%;"></div>
+    </div>
+
+    <a href="{{ url_for('inicio') }}" class="volver">Volver a la Portada</a>
+
+    <script>
+        fetch('/api/datos-graficos')
+            .then(response => response.json())
+            .then(datos => {
+                
+                // gráfico de líneas (miembros por día)
+                Highcharts.chart('graficoLineas', {
+                    title: { text: 'Cantidad de Miembros Registrados por Día' },
+                    xAxis: { categories: datos.lineas.labels, title: { text: 'Días' } },
+                    yAxis: { title: { text: 'Cantidad de Miembros' }, allowDecimals: false },
+                    series: [{ name: 'Miembros', data: datos.lineas.data, color: '#007bff' }],
+                    credits: { enabled: false }
+                });
+
+                // gráfico de torta (actividades por tipo)
+                const datosTortaFormateados = datos.torta.labels.map((label, index) => {
+                    return { name: label, y: datos.torta.data[index] };
+                });
+                Highcharts.chart('graficoTorta', {
+                    chart: { type: 'pie' },
+                    title: { text: 'Total de Actividades por Tipo' },
+                    series: [{ name: 'Actividades', colorByPoint: true, data: datosTortaFormateados }],
+                    credits: { enabled: false }
+                });
+
+                // gráfico de barras (actividades por comuna)
+                Highcharts.chart('graficoBarras', {
+                    chart: { type: 'column' },
+                    title: { text: 'Actividades Registradas por Comuna' },
+                    xAxis: { categories: datos.barras.labels, title: { text: 'Comunas' } },
+                    yAxis: { title: { text: 'Total de Actividades' }, allowDecimals: false },
+                    series: [{ name: 'Actividades', data: datos.barras.data, color: '#28a745' }],
+                    credits: { enabled: false }
+                });
+
+            })
+            .catch(error => console.error('Error al cargar los gráficos:', error));
+    </script>
+</body>
+</html>
