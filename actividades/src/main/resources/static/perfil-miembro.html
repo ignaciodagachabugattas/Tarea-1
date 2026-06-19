@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Actividades del Miembro - DCC Calidad de Vida</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <style>
+        .miniatura { max-width: 120px; max-height: 120px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gestión de Actividades - DCC - Calidad de Vida</h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Portada</a></li>
+                <li><a href="/registrar-miembro.html">Registrar Miembro</a></li>
+                <li><a href="/informar-actividad.html">Informar Actividad</a></li>
+                <li><a href="/listado-miembros.html">Listado de Miembros</a></li>
+                <li><a href="/listado-actividades.html">Listado de Actividades y Buscador de Actividades</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>Perfil y Actividades de: <span id="perfil-nombre">Cargando...</span></h2>
+        
+        <p>
+            <strong>Email:</strong> <span id="perfil-email"></span><br>
+            <strong>Tipo:</strong> <span id="perfil-tipo"></span><br>
+            <strong>Dato Extra:</strong> <span id="perfil-dato-extra"></span> <small><em>                  <br>  * Año de ingreso a pre/post grado para estudiante,<br>  * Horas de docencia para académico(a),<br> * Año de contratación para funcionario(a)
+</em></small><br>
+            <strong>Fecha de Registro:</strong> <span id="perfil-fecha"></span><br>
+            <strong>Comuna:</strong> <span id="perfil-comuna"></span>        
+        </p>
+
+        <h3 style="margin-top: 30px;">Actividades Informadas</h3>
+
+        <table style="border: 1px solid black; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Actividad</th>
+                    <th>Tipo</th>
+                    <th>Horario / Lugar</th>
+                    <th>Foto / Video</th>
+                    <th>Enlace</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-actividades-miembro">
+                </tbody>
+        </table>
+
+        <p style="margin-top: 20px;">
+            <a href="/listado-miembros.html">Volver al Listado de Miembros</a>
+        </p>
+    </main>
+    
+    <script src="/js/script.js"></script>
+</body>
+</html>

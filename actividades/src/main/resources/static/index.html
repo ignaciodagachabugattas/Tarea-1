@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Portada - DCC Calidad de Vida</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+    <header> 
+        <h1>Gestión de Actividades - DCC - Calidad de Vida</h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Portada</a></li>
+                <li><a href="/registrar-miembro.html">Registrar Miembro</a></li>
+                <li><a href="/informar-actividad.html">Informar Actividad</a></li>
+                <li><a href="/listado-miembros.html">Listado de Miembros</a></li>
+                <li><a href="/listado-actividades.html">Listado de Actividades y Buscador de Actividades</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Bienvenidx!</h2>
+            
+            <div id="mensaje-exito-miembro" style="display: none; padding: 15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+             Miembro registrado correctamente. 
+            </div>
+            
+            <div id="mensaje-exito-actividad" style="display: none; padding: 15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+             Actividad informada correctamente. 
+            </div>
+            
+        </section>
+
+        <section>
+            <h3>Últimos 5 Miembros Registrados!!!</h3>
+                    <p>Haz click en el nombre de un miembro para ver las actividades que ha informado.</p>
+
+            <table style="border: 1px solid black; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Tipo</th>
+                        <th>Fecha de Registro</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-ultimos-miembros">
+                </tbody>
+            </table>
+            
+            <p id="mensaje-sin-miembros" style="display: none;">Aún no hay miembros registrados.</p>
+            
+        </section>
+
+        <section> 
+            <br><br>
+            <a href="estadisticas.html" class="btn btn-primary">Ver Estadísticas y Gráficos Avanzados</a>
+        </section>
+
+    </main>
+
+<script src="js/script.js"></script>
+<script src="js/buscador.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const parametros = new URLSearchParams(window.location.search);
+        const estado = parametros.get('exito');
+
+        if (estado === 'miembro') {
+            document.getElementById('mensaje-exito-miembro').style.display = 'block';
+        } else if (estado === 'actividad') {
+            document.getElementById('mensaje-exito-actividad').style.display = 'block';
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,34 +1,31 @@
-# Tarea 1 - Gestión de Actividades - DCC - Calidad de Vida
-CC5002-1 Otoño 2026- Desarrollo de Aplicaciones Web  
-Ignacio Dagach Abugattas
-Repositorio: https://github.com/ignaciodagachabugattas/desarrollo_web_ignacio_dagach_abugattas/tree/Tarea-1 
+# NOTA: 
+No me dejaba subir a git la tarea en su totalidad, tuve que hacerle git.ignore a el archivo "C:\Users\Ignacio\Documents\GitHub\desarrollo_web_ignacio_dagach_abugattas\actividades\src\main\java\com\example\actividades\oracleJdk-26\lib\modules" pues era muy pesado, sin embargo ese archivo no es mío, venía con java. De cualquier manera en este [drive https://drive.google.com/drive/folders/1WKd191P-5zmf2Xn_m9n7QQzgeJZKu7Xd?usp=sharing](https://drive.google.com/drive/folders/1WKd191P-5zmf2Xn_m9n7QQzgeJZKu7Xd?usp=drive_link) subo la tarea en su totalidad con ese archivo.
 
-
+# Tarea 4 - Gestión de Actividades - DCC - Calidad de Vida
+CC5002-1 Otoño 2026 - Desarrollo de Aplicaciones Web  
+Ignacio Dagach Abugattas  
+Repositorio: https://github.com/ignaciodagachabugattas/desarrollo_web_ignacio_dagach_abugattas/tree/Tarea-4
 
 ## Descripción del Proyecto
-Este proyecto es un prototipo de página web para el área de Calidad de Vida del DCC. La idea es tener una plataforma donde la comunidad (estudiantes, profes y funcionarios) pueda registrar y ver las actividades extracurriculares que se hacen en el departamento, para fomentar y potenciar la vida en comunidad.
+Este proyecto es una evolución directa de las entregas anteriores para la plataforma de la sección de Calidad de Vida del DCC. Permite a la comunidad (estudiantes, profesores y funcionarios) registrar, buscar, evaluar y comentar actividades extracurriculares con el fin de potenciar la vida en comunidad dentro del departamento.
+
+## Actualizaciones con respecto a la Tarea 3
+
+* **Migración del Backend:** Se migró el servidor previo (Python) hacia el framework **Spring Boot (Java 17)**, utilizando **JPA** para la comunicación con la base de datos.
+* **Continuidad del Sistema:** Se mantuvo intacto todo lo de las tareas anteriores.
+* **Nuevas Funcionalidades Asíncronas:** Se implementó un motor de búsqueda predictiva en tiempo real y un sistema de notas para las actividades.
 
 
-## Lo que hace
-1. **Registro de Miembros:** Hay un formulario que se adapta. Si eliges "Estudiante" (puedes elegir entre pregrado y postgrado) te pide el año de ingreso (a pregrado o postgrado, respectivamente). Lo mismo para "Funcionarios". Y si eliges "Académico", te pide las horas de docencia. 
-2. **Registro Actividades:** Hay también un formulario para subir la información de las actividades, incluyendo URL y archivos multimedia.
-3. **Listados con Filtros:** Hay tablas (una de personas y otra de actividades). Les puse filtros por tipo y se pueden ordenar al hacer clic en los títulos de las columnas.
-4. **Paginación:** Para mantener el orden, las talas son de a 4 filas por página.
-5. **Métricas:** En el inicio hay gráficos de barra, e imágenes (propias) para que se vea visualmente cuánta gente hay por categoría, y como serían las actividades.
 
+## Características Principales Nuevas
 
-## Decisiones (Para la corrección)
+### Buscador de actividades
+* **Búsqueda automática:** Tiene un único cuadro de texto. Al escribir 3 o más letras, empieza a buscar automáticamente en el servidor.
+* **Dónde busca:** Encuentra coincidencias en el nombre de la actividad o el nombre de la comuna.
+* **Resaltado:** Destaca con color el texto que coincide con lo que el usuario escribió.
+* **Si no hay resultados:** Muestra un mensaje avisando que no se encontró nada.
 
-1. **Paginación y Filtros:** A grandes rasgos, la lógica de estas carácteristicas de las tablas está dada por la función `actualizarTabla()`.
-2. **Imágenes:** En las métricas usé fotos de prueba para demostrar cómo se vería el sistema con contenido real. Estas fotos son de mis mascotas, y son tomadas por mi.
-
-
-## Cómo probarlo
-1. Clona el repositorio y muévete a la rama **"Tarea 1"**.
-2. Abre el archivo `HTML/0-index.html` en el navegador.
-3. Desde ahí puedes moverte por el menú a las otras páginas:
-    * `Métricas` (Inicio)
-    * `Registrar Miembro` 
-    * `Informar Actividad` 
-    * `Listado de Miembros` 
-    * `Listado de Actividades` 
+### Sistema de notas
+* **Ver promedio:** Cada actividad muestra su promedio de notas actual. Si nadie la ha evaluado todavía, aparece un "-".
+* **Botón Evaluar:** Al hacer clic, pide al usuario ingresar una nota. El código asegura que sea solo un número entero entre 1 y 7.
+* **Actualización al tiro:** Al guardar la nota, el promedio y la interfaz se recalculan y actualizan automáticamente con JavaScript, sin necesidad de recargar la página completa.
