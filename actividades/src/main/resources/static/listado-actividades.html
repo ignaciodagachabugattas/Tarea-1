@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Actividades - DCC Calidad de Vida</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+    <style>
+        .paginacion { margin-top: 20px; text-align: center; }
+        .paginacion a, .paginacion strong { padding: 8px 12px; margin: 0 5px; border: 1px solid #ccc; text-decoration: none; border-radius: 5px; }
+        .paginacion strong { background-color: #007bff; color: white; border-color: #007bff; }
+        .miniatura { max-width: 120px; max-height: 120px; border-radius: 5px; }
+        th a { color: black; text-decoration: none; }
+        th a:hover { text-decoration: underline; color: #007bff; }
+        
+        /* Estilo para el buscador */
+        .contenedor-buscador {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gestión de Actividades - DCC - Calidad de Vida</h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Portada</a></li>
+                <li><a href="/registrar-miembro.html">Registrar Miembro</a></li>
+                <li><a href="/informar-actividad.html">Informar Actividad</a></li>
+                <li><a href="/listado-miembros.html">Listado de Miembros</a></li>
+                <li><a href="/listado-actividades.html">Listado de Actividades y Buscador de Actividades</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>Listado de Actividades Informadas</h2>
+
+        <div class="contenedor-buscador">
+            <label for="caja-busqueda"><strong>Buscador Automático:</strong></label>
+            <input type="text" id="caja-busqueda" placeholder="Escribe 3 letras para buscar por nombre o comuna." style="width: 400px; padding: 8px; margin-left: 10px;">
+        </div>
+
+        <form id="form-filtro-actividades" method="GET" action="#" style="margin-bottom: 20px;">
+            <label for="tipo">Filtrar por tipo:</label>
+            <select name="tipo" id="tipo">
+                <option value="">Todas</option>
+                <option value="deportivo">Deportivo</option>
+                <option value="academico">Académico</option>
+                <option value="musical">Musical</option>
+                <option value="otros">Otros</option>
+            </select>
+            <input type="hidden" id="sort" name="sort" value="">
+            <input type="hidden" id="dir" name="dir" value="">
+            <button type="submit">Filtrar</button>
+        </form>
+        <p> * Haz click en el nombre de una actividad para acceder a su detalle y comentarios.</p>
+
+        <table style="border: 1px solid black; border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th><a href="#" data-sort="nombre" class="sort-link">Actividad</a></th>
+                    <th><a href="#" data-sort="tipo" class="sort-link">Tipo</a></th>
+                    <th>Horario / Lugar</th>
+                    <th>Foto / Video</th> <th>Enlace</th>       <th>Informado por</th><th>Comuna</th>       <th>Nota</th>         <th>Evaluar</th>      </tr>
+            </thead>
+            <tbody id="cuerpo-tabla-actividades">
+            </tbody>
+        </table>
+        <div class="paginacion" id="paginacion-container"></div>
+    </main>
+    
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+    <script src="/js/script.js?v=3"></script>
+</body>
+</html>

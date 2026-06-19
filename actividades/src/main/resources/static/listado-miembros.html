@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Miembros - DCC Calidad de Vida</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+    <style>
+        .paginacion { margin-top: 20px; text-align: center; }
+        .paginacion a, .paginacion strong { padding: 8px 12px; margin: 0 5px; border: 1px solid #ccc; text-decoration: none; border-radius: 5px; }
+        .paginacion strong { background-color: #007bff; color: white; border-color: #007bff; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gestión de Actividades - DCC - Calidad de Vida</h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Portada</a></li>
+                <li><a href="/registrar-miembro.html">Registrar Miembro</a></li>
+                <li><a href="/informar-actividad.html">Informar Actividad</a></li>
+                <li><a href="/listado-miembros.html">Listado de Miembros</a></li>
+                <li><a href="/listado-actividades.html">Listado de Actividades y Buscador de Actividades</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>Listado de Miembros Registrados</h2>
+
+        <p>Haz click en el nombre de un miembro para ver las actividades que ha informado.</p>
+        
+        <form id="form-filtro" method="GET" action="#" style="margin-bottom: 20px;">
+            <label for="tipo">Filtrar por tipo:</label>
+            <select name="tipo" id="tipo">
+                <option value="">Todos</option>
+                <option value="pregrado">Pregrado</option>
+                <option value="postgrado">Postgrado</option>
+                <option value="academico">Académico</option>
+                <option value="funcionario">Funcionario</option>
+            </select>
+            <input type="hidden" id="sort" name="sort" value="">
+            <button type="submit">Filtrar</button>
+        </form>
+        <p style="text-align: left; margin-top: 5px;">
+            <small style="color: #666;">
+                <em><strong>Dato Extra:</strong>              <br>        * Año de ingreso a pre/post grado para estudiante,<br>  * Horas de docencia para académico(a),<br> * Año de contratación para funcionario(a)
+                </em>
+            </small>
+        </p>
+        <table style="border: 1px solid black; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th><a href="#" data-sort="nombre" style="color: black; text-decoration: none;">Nombre Completo </a></th>
+                    <th><a href="#" data-sort="email" style="color: black; text-decoration: none;">Email </a></th>
+                    <th><a href="#" data-sort="tipo" style="color: black; text-decoration: none;">Tipo </a></th>
+                    <th>Dato Extra</th>
+                    <th><a href="#" data-sort="fecha" style="color: black; text-decoration: none;">Fecha de Registro </a></th>
+                </tr>
+            </thead>
+            <tbody id="cuerpo-tabla-miembros">
+            </tbody>
+        </table>
+
+
+
+        <div class="paginacion" id="paginacion-container">
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+    <script src="js/script.js?v=2"></script>
+</body>
+</html>

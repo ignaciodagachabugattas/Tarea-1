@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Actividad</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f9; }
+        .contenedor { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .error-msg { color: red; font-size: 0.9em; display: none; margin-bottom: 10px; }
+        .comentario-box { border-bottom: 1px solid #ccc; padding: 10px 0; }
+        .fecha { color: #666; font-size: 0.8em; }
+        .form-group { margin-bottom: 15px; }
+        input[type="text"], textarea { width: 100%; box-sizing: border-box; }
+        .btn { padding: 10px 15px; background: #28a745; color: white; border: none; cursor: pointer; border-radius: 4px;}
+        .btn:hover { background: #218838; }
+        .volver { display: inline-block; margin-top: 20px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+    <h1>Información de la Actividad</h1>
+    <p><strong>Nombre:</strong> <span id="detalle-nombre">Cargando...</span></p>
+    <p><strong>Tipo:</strong> <span id="detalle-tipo">Cargando...</span></p>
+    <p><strong>Horario:</strong> <span id="detalle-horario">Cargando...</span></p>
+    <p><strong>Lugar:</strong> <span id="detalle-lugar">Cargando...</span></p>
+    
+    <hr>
+
+    <h3>Agregar Comentario</h3>
+    <form id="formComentario">
+        <div class="form-group">
+            <label>Nombre del comentarista (Obligatorio):</label><br>
+            <input type="text" id="nombre" minlength="3" maxlength="80" required>
+            <div id="error-nombre" class="error-msg"></div>
+        </div>
+
+        <div class="form-group">
+            <label>Comentario (Obligatorio):</label><br>
+            <textarea id="texto" rows="4" cols="50" minlength="5" required></textarea>
+            <div id="error-texto" class="error-msg"></div>
+        </div>
+
+        <button type="submit" class="btn">Agregar comentario</button>
+    </form>
+
+    <hr>
+
+    <h3>Listado de Comentarios</h3>
+    <div id="lista-comentarios">
+        <p>Cargando comentarios...</p>
+    </div>
+
+    <a href="/listado-actividades.html" class="volver">Volver al listado</a>
+</div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const idActividad = parseInt(urlParams.get('id'));
+    
+    const listaComentariosDiv = document.getElementById('lista-comentarios');
+    const formComentario = document.getElementById('formComentario');
+
+    function cargarDetalleActividad() {
+        if (!idActividad) {
+            document.querySelector('.contenedor').innerHTML = '<p style="color:red;">Error: No se especificó un ID válido.</p>';
+            return;
+        }
+
+        fetch(`http://localhost:8080/api/actividades/${idActividad}`)
+            .then(response => {
+                if (!response.ok) throw new Error("Actividad no encontrada");
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('detalle-nombre').innerText = data.nombreActividad || data.nombre_actividad || 'Desconocido';
+                document.getElementById('detalle-tipo').innerText = data.tipoActividad || data.tipo_actividad || 'Desconocido';
+                document.getElementById('detalle-horario').innerText = data.horario || 'No especificado';
+                document.getElementById('detalle-lugar').innerText = data.lugar || 'No especificado';
+            })
+            .catch(error => {
+                console.error('Error al cargar la actividad:', error);
+                document.getElementById('detalle-nombre').innerText = "Error al cargar datos";
+            });
+    }
+
+    function cargarComentarios() {
+        if (!idActividad) return;
+
+        fetch(`http://localhost:8080/api/actividades/${idActividad}/comentarios`)
+            .then(response => {
+                if (!response.ok) throw new Error("Error al buscar comentarios");
+                return response.json();
+            })
+            .then(data => {
+                listaComentariosDiv.innerHTML = ''; 
+                if (!data || data.length === 0) {
+                    listaComentariosDiv.innerHTML = '<p>No hay comentarios aún.</p>';
+                    return;
+                }
+                
+                data.forEach(c => {
+                    // Soporte para fecha o fecha_creacion
+                    let fechaMostrada = c.fecha || c.fechaCreacion || 'Reciente';
+                    listaComentariosDiv.innerHTML += `
+                        <div class="comentario-box">
+                            <strong>${c.nombre}</strong> <span class="fecha">(${fechaMostrada})</span>
+                            <p style="margin: 5px 0;">${c.texto}</p>
+                        </div>
+                    `;
+                });
+            })
+            .catch(error => console.error('Error al cargar comentarios:', error));
+    }
+
+    formComentario.addEventListener('submit', function(e) {
+        e.preventDefault();
+        document.getElementById('error-nombre').style.display = 'none';
+        document.getElementById('error-texto').style.display = 'none';
+
+        const nombre = document.getElementById('nombre').value.trim();
+        const texto = document.getElementById('texto').value.trim();
+
+        if (nombre.length < 3 || texto.length < 5) {
+            alert("Por favor cumple con el largo mínimo de los campos.");
+            return;
+        }
+
+        fetch(`http://localhost:8080/api/actividades/${idActividad}/comentarios`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nombre: nombre, texto: texto })
+        })
+        .then(response => {
+            if (response.ok || response.status === 201) {
+                formComentario.reset();
+                cargarComentarios(); // Recargar la lista para mostrar el nuevo
+            } else {
+                alert("Hubo un error al guardar el comentario en el servidor.");
+            }
+        })
+        .catch(error => console.error('Error de conexión:', error));
+    });
+
+    cargarDetalleActividad();
+    cargarComentarios();
+</script>
+
+</body>
+</html>
