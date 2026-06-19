@@ -1,3 +1,6 @@
+# NOTA: 
+No me dejaba subir a git la tarea en su totalidad, tuve que hacerle git.ignore a el archivo "C:\Users\Ignacio\Documents\GitHub\desarrollo_web_ignacio_dagach_abugattas\actividades\src\main\java\com\example\actividades\oracleJdk-26\lib\modules" pues era muy pesado, sin embargo ese archivo no es mío, venía con java. De cualquier manera en este [drive https://drive.google.com/drive/folders/1WKd191P-5zmf2Xn_m9n7QQzgeJZKu7Xd?usp=sharing](https://drive.google.com/drive/folders/1WKd191P-5zmf2Xn_m9n7QQzgeJZKu7Xd?usp=drive_link) subo la tarea en su totalidad con ese archivo.
+
 # Tarea 4 - Gestión de Actividades - DCC - Calidad de Vida
 CC5002-1 Otoño 2026 - Desarrollo de Aplicaciones Web  
 Ignacio Dagach Abugattas  
